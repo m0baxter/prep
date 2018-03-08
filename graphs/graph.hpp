@@ -3,8 +3,6 @@
 #include <stack>
 #include <vector>
 
-#include <iostream>
-
 #ifndef GRAPHS_HPP
 #define GRAPHS_HPP
 
