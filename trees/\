@@ -163,9 +163,9 @@ void RBTree<T>::balance() {
 
          root = y;
          RBTree<T>(x).blacken();
-         RBTree<T>(z).blacken();
 
          std::cout << "case 1:" << std::endl;
+
          RBTree<T>(y).preorder();
       }
       else if ( root->lChild != nullptr and root->lChild->c == Colour::Red and root->lChild->rChild != nullptr and root->lChild->rChild->c == Colour::Red ) {
@@ -181,9 +181,7 @@ void RBTree<T>::balance() {
 
          root = y;
          RBTree<T>(x).blacken();
-         RBTree<T>(z).blacken();
 
-         std::cout << "case 2:" << std::endl;
          RBTree<T>(y).preorder();
       }
       else if ( root->rChild != nullptr and root->rChild->c == Colour::Red and root->rChild->lChild != nullptr and root->rChild->lChild->c == Colour::Red ) {
@@ -199,9 +197,7 @@ void RBTree<T>::balance() {
 
          root = y;
          RBTree<T>(z).blacken();
-         RBTree<T>(x).blacken();
 
-         std::cout << "case 3:" << std::endl;
          RBTree<T>(y).preorder();
       }
       else if ( root->rChild != nullptr and root->rChild->c == Colour::Red and root->rChild->rChild != nullptr and root->rChild->rChild->c == Colour::Red ) {
@@ -217,10 +213,8 @@ void RBTree<T>::balance() {
 
          root = y;
          RBTree<T>(z).blacken();
-         RBTree<T>(x).blacken();
-         
-         std::cout << "case 4:" << std::endl;
          RBTree<T>(y).preorder();
+
       }
    }
 }
