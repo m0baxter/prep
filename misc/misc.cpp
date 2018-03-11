@@ -6,7 +6,7 @@
 #include <utility>
 
 
-int numberOfOnes( int a ) {
+unsigned int numberOfOnes( unsigned int a ) {
    /*Counts the number of bits set to 1 in the integer a.*/
 
    int count = 0;
