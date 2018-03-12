@@ -5,6 +5,9 @@
 #include <algorithm>
 #include <utility>
 
+#include <array>
+#include "misc.hpp"
+
 
 unsigned int numberOfOnes( unsigned int a ) {
    /*Counts the number of bits set to 1 in the integer a.*/
@@ -120,6 +123,18 @@ int main() {
 
    for (auto &ran : merged ) {
       std::cout << ran.first << "   " << ran.second << std::endl;
+   }
+
+
+   std::array< std::array<int, 2>, 2> A = { {{1,1},{0,1}} };
+   std::array< std::array<int, 2>, 2> B = { {{1,1},{1,1}} };
+
+   std::array< std::array<int, 2>, 2> C = multiply<int, 2, 2, 2>(A,B);
+
+   for (int i = 0; i < 2; ++i ) {
+      for (int j = 0; j < 2; ++j ) {
+         std::cout << C[i][j] << std::endl;
+      }
    }
 
    return 0;
