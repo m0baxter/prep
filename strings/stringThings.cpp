@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include <set>
 #include <algorithm>
 
@@ -66,6 +67,24 @@ std::string revWords( const std::string s ) {
 }
 
 
+std::set< char > common( const std::string &s1, const std::string &s2 ) {
+   /*Returns a set of common elements. in s1 and s2.*/
+
+   std::string string1(s1.begin(), s1.end());
+   std::string string2(s2.begin(), s2.end());
+   
+   std::vector<char> result(s1.size() + s2.size() );
+
+   std::sort(string1.begin(), string1.end() );
+   std::sort(string2.begin(), string2.end() );
+
+   auto it = std::set_intersection( string1.begin(), string1.end(), string2.begin(), string2.end(), result.begin() );
+
+   return std::set<char>(result.begin(), it);
+
+}
+
+
 int main() {
 
    std::cout << allUnique("1234") << std::endl;
@@ -80,6 +99,13 @@ int main() {
 
    std::cout << revWords("This is a bunch of words") << std::endl;
    std::cout << true << std::endl;
+
+   std::string s1 = "this is words.";
+   std::string s2 = "that is not.";
+   auto res = common( s1, s2 );
+
+   std::cout << s1 << "    " << s2 << std::endl;
+   std::cout << std::string(res.begin(), res.end()) << std::endl;
 
    return 0;
 }
