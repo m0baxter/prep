@@ -4,7 +4,6 @@
 #include <vector>
 #include <algorithm>
 #include <utility>
-
 #include <array>
 #include "misc.hpp"
 
@@ -116,6 +115,28 @@ std::vector< std::pair<int,int>> mergeIntervals( std::vector< std::pair<int, int
 }
 
 
+void fizzBang() {
+
+   for ( int i = 1; i <= 100; ++i ) {
+      bool mult5 = (i % 5 == 0);
+      bool mult3 = (i % 3 == 0);
+
+      if ( mult3 and mult5 ) {
+         std::cout << "FizzBang" << std::endl;
+      }
+      else if ( mult3 ) {
+         std::cout << "Fizz" << std::endl;
+      }
+      else if ( mult5 ) {
+         std::cout << "Bang" << std::endl;
+      }
+      else {
+         std::cout << i << std::endl;
+      }
+   }
+}
+
+
 int main() {
 
    std::vector< std::pair<int,int> > vec = { std::make_pair(1, 5), std::make_pair(10, 15), std::make_pair(20, 25), std::make_pair(30, 200) };
@@ -136,6 +157,8 @@ int main() {
          std::cout << C[i][j] << std::endl;
       }
    }
+
+   fizzBang();
 
    return 0;
 }
