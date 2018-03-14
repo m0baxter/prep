@@ -188,7 +188,8 @@ Node<T>* Tree<T>::getPointer( T val ) {
       if( root->getLeft() != nullptr ) {
          res = Tree<T>( root->getLeft() ).getPointer( val );
       }
-      else if ( root->getRight() != nullptr ) {
+
+      if ( root->getRight() != nullptr ) {
          res = Tree<T>( root->getRight() ).getPointer( val );
       }
    }
