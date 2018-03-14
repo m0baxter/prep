@@ -56,6 +56,10 @@ class Tree {
       void postorder();
       void preorder();
       bool isBalanced();
+      Node<T>* getPointer( T );
+      Node<T>* getRoot()  { return root; };
+      Node<T>* getLeft()  { return root->getLeft(); };
+      Node<T>* getRight() { return root->getRight(); };
 };
 
 template<class T>
@@ -164,6 +168,32 @@ bool Tree<T>::isBalanced() {
 
       return left.isBalanced() && right.isBalanced() && ( std::abs( (int) (left.height() - right.height()) ) <= 1);
    }
+}
+
+
+template<class T>
+Node<T>* Tree<T>::getPointer( T val ) {
+
+   Node<T> *res = nullptr;
+
+   if ( root != nullptr ) {
+
+      if ( res != nullptr ) {
+         return res;
+      }
+      if (val == root->getVal() ){
+         return root;
+      }
+
+      if( root->getLeft() != nullptr ) {
+         res = Tree<T>( root->getLeft() ).getPointer( val );
+      }
+      else if ( root->getRight() != nullptr ) {
+         res = Tree<T>( root->getRight() ).getPointer( val );
+      }
+   }
+
+   return res;
 }
 
 #endif

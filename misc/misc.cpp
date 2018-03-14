@@ -5,9 +5,9 @@
 #include <algorithm>
 #include <utility>
 #include <array>
-
 #include <random>
 #include <ctime>
+#include <map>
 
 #include "misc.hpp"
 
@@ -207,13 +207,42 @@ int diceRoll( const int numRolls ) {
 }
 
 
+std::vector<int> duplicates( std::vector<int> data ) {
+   /*Returns a list of dupliate items.*/
+
+   std::map<int,int> counts;
+
+   for (auto &i : data ) {
+
+      if ( counts.count(i) ) {
+         counts[i] += 1;
+      }
+      else {
+         counts[i] = 1;
+      }
+   }
+
+   std::vector<int> dups;
+
+   for ( auto &pair : counts ) {
+      if ( pair.second > 1 ) {
+         dups.push_back( pair.first );
+      }
+   }
+
+   return dups;
+}
+
+
 int main() {
 
-   std::array<int,37> data = {1,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,6,7,8,9,10};
+   std::vector<int> data = { 1, 3, 4, 1, 5, 8, 0, 2, 1, 3, 10, 0 };
 
-   std::cout << find<int, data.size()>( data, 6) << std::endl;
+   std::vector<int> dups = duplicates( data );
 
-   diceRoll( 2000000000 );
+   for ( auto &i : dups ) {
+      std::cout << i << std::endl;
+   }
 
    return 0;
 }

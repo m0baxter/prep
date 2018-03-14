@@ -37,7 +37,6 @@ bool find( std::array<T,n> data, T val ) {
    int check = (start + end)/2;
 
    while ( start != end - 1 ) {
-      std::cout << start << "  " << end << std::endl;
 
       if ( val > data[check] ) {
          start = check;
@@ -54,6 +53,21 @@ bool find( std::array<T,n> data, T val ) {
 
    return false;
 }
+
+
+template<int n>
+bool addTo( const int sum, const std::array<int, n> values ) {
+   /*determines whether any two elements in values add to sum.*/
+
+   for ( auto &i : values ) {
+      if ( find<int, n>( values, sum - i ) ) {
+         return true;
+      }
+   }
+
+   return false;
+}
+
 
 #endif
 

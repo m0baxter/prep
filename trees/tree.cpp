@@ -7,8 +7,8 @@
 int main() {
 
    Tree<int> t;
-   //std::vector<int> v = { 4, 2, 6, 1, 3, 5, 7 };
-   std::vector<int> v = { 1, 2, 3, 4, 5, 6, 7 };
+   std::vector<int> v = { 4, 2, 6, 1, 3, 5, 7 };
+   //std::vector<int> v = { 1, 2, 3, 4, 5, 6, 7 };
 
    std::cout << "height: " << t.height() << std::endl;
 
@@ -30,7 +30,7 @@ int main() {
    t.postorder();
    std::cout << std::endl;
 
-   std::cout << t.isBalanced() << std::endl;
+   std::cout << t.getPointer( 7 )->getVal() << std::endl;
 
    return 0;
 }
