@@ -27,5 +27,33 @@ std::array< std::array<T, m>, n> multiply( std::array< std::array<T, m>, l> A, s
    return C;
 }
 
+
+template<class T, int n>
+bool find( std::array<T,n> data, T val ) {
+   /*Performs a binary search to find val.*/
+
+   int start = 0;
+   int end = data.size();
+   int check = (start + end)/2;
+
+   while ( start != end - 1 ) {
+      std::cout << start << "  " << end << std::endl;
+
+      if ( val > data[check] ) {
+         start = check;
+      }
+      else if ( val < data[check] ) {
+         end = check;
+      }
+      else {
+         return true;
+      }
+
+      check = (start + end)/2;
+   }
+
+   return false;
+}
+
 #endif
 

@@ -5,6 +5,10 @@
 #include <algorithm>
 #include <utility>
 #include <array>
+
+#include <random>
+#include <ctime>
+
 #include "misc.hpp"
 
 
@@ -137,28 +141,79 @@ void fizzBang() {
 }
 
 
-int main() {
+void coinFlip() {
 
-   std::vector< std::pair<int,int> > vec = { std::make_pair(1, 5), std::make_pair(10, 15), std::make_pair(20, 25), std::make_pair(30, 200) };
-   std::vector< std::pair<int,int> > merged = mergeIntervals( vec, std::make_pair(12,27) );
+   std::mt19937 rnd( std::time(0));
 
-   for (auto &ran : merged ) {
-      std::cout << ran.first << "   " << ran.second << std::endl;
+   for (int i = 0; i < 10; ++i ) {
+      std::cout << rnd( ) % 2 << std::endl;
    }
+}
 
+int diceRoll( const int numRolls ) {
 
-   std::array< std::array<int, 2>, 2> A = { {{1,1},{0,1}} };
-   std::array< std::array<int, 2>, 2> B = { {{1,1},{1,1}} };
+   std::array<int, 7> counts = { 0, 0, 0, 0, 0, 0, 0 };
+   std::mt19937 rnd( std::time(0));
 
-   std::array< std::array<int, 2>, 2> C = multiply<int, 2, 2, 2>(A,B);
+   int i = 0;
 
-   for (int i = 0; i < 2; ++i ) {
-      for (int j = 0; j < 2; ++j ) {
-         std::cout << C[i][j] << std::endl;
+   while ( i < numRolls ) {
+
+      int c1 = rnd( ) % 2;
+      int c2 = rnd( ) % 2;
+      int c3 = rnd( ) % 2;
+
+      int roll = 100 * c1 + 10 * c2 + c3;
+
+      switch (roll) {
+         case 1:
+            counts[1] += 1;
+            ++i;
+            break;
+
+         case 10:
+            counts[2] += 1;
+            ++i;
+            break;
+
+         case 11:
+            counts[3] += 1;
+            ++i;
+            break;
+
+         case 100:
+            counts[4] += 1;
+            ++i;
+            break;
+
+         case 101:
+            counts[5] += 1;
+            ++i;
+            break;
+
+         case 110:
+            counts[6] += 1;
+            ++i;
+            break;
+
+         default:
+            break;
       }
    }
 
-   fizzBang();
+   for ( int j = 1; j < 7; ++j ) {
+      std::cout << "Rolled: " << j << "  Fraction: " << (1.0*counts[j]/numRolls) << std::endl; 
+   }
+}
+
+
+int main() {
+
+   std::array<int,37> data = {1,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,6,7,8,9,10};
+
+   std::cout << find<int, data.size()>( data, 6) << std::endl;
+
+   diceRoll( 2000000000 );
 
    return 0;
 }

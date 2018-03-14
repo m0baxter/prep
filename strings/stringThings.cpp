@@ -4,6 +4,7 @@
 #include <vector>
 #include <set>
 #include <algorithm>
+#include "stringThings.hpp"
 
 
 bool allUnique( const std::string s ) {
@@ -67,6 +68,26 @@ std::string revWords( const std::string s ) {
 }
 
 
+int numberOf( const int n, const int i ) {
+   /*Counts the number of times i appears in the range 1...n*/
+
+   int count = 0;
+   char digit = fromString<char>( toString<int>(i) );
+
+   for ( int j = 1; j <= n; ++j ) {
+      std::string num = toString<int>(j);
+
+      for ( auto &c : num ) {
+         if (c == digit) {
+            count += 1;
+         }
+      }
+   }
+
+   return count;
+}
+
+
 std::set< char > common( const std::string &s1, const std::string &s2 ) {
    /*Returns a set of common elements. in s1 and s2.*/
 
@@ -106,6 +127,13 @@ int main() {
 
    std::cout << s1 << "    " << s2 << std::endl;
    std::cout << std::string(res.begin(), res.end()) << std::endl;
+
+   int i = fromString<int>("12");
+   std::string s = toString<int>(32);
+
+   std::cout << i << "   " << s << std::endl;
+
+   std::cout << numberOf( 30, 2 ) << std::endl;
 
    return 0;
 }

@@ -2,8 +2,8 @@
 #include <set>
 #include <vector>
 
-#ifndef GRAPHS_HPP
-#define GRAPHS_HPP
+#ifndef GRAPH_HPP
+#define GRAPH_HPP
 
 class Graph {
 
@@ -16,8 +16,6 @@ class Graph {
       void addDirectedEdge( const int, const int );
       bool isPath( const int, const int );
       bool hasLoop( const int );
-      //std::stack<int> path( const int, const int );
-      std::vector<int> path( const int, const int );
       void print();
 };
 
