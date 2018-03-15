@@ -4,6 +4,7 @@
 #include <vector>
 #include <set>
 #include <algorithm>
+#include <sstream>
 #include "stringThings.hpp"
 
 
@@ -121,6 +122,22 @@ void permutations( std::string str, std::string out ) {
    }
 }
 
+std::string deleteFrom( std::string s1, std::string s2 ) {
+   /*Removes all of the characters in s1 from s2.*/
+
+   std::set<char> remove( s1.begin(), s1.end() );
+   std::string out = "";
+
+   for ( char &c : s2 ) {
+      std::cout << c << std::endl;
+      if ( !remove.count(c) ) {
+         out = out.insert( out.size(), 1, c);
+      }
+   }
+
+   return out;
+}
+
 
 int main() {
 
@@ -149,9 +166,7 @@ int main() {
 
    std::cout << i << "   " << s << std::endl;
 
-   std::cout << numberOf( 30, 2 ) << std::endl;
-
-   permutations("abcd", "");
+   std::cout << deleteFrom("aeiou", "we are students.")<< std::endl;
 
    return 0;
 }
