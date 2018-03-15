@@ -234,6 +234,38 @@ std::vector<int> duplicates( std::vector<int> data ) {
 }
 
 
+std::array< std::array<int, 2>, 2 > nthPower( std::array< std::array<int, 2>, 2 > A, int n ) {
+
+   if (n == 1) {
+      return A;
+   }
+
+   else if ( n % 2 == 0 ) {
+      return multiply<int,2,2,2>( nthPower(A, n/2), nthPower(A, n/2) );
+   }
+   else if ( n % 2 == 1 ) {
+      return multiply<int,2,2,2>( multiply<int,2,2,2>( nthPower(A, (n-1)/2), nthPower(A, (n-1)/2) ), A);
+   }
+}
+
+
+int fibonacci( const int n ) {
+   /*Calculates the nth fibonacci number*/
+
+   std::array< std::array<int, 2>, 2 > unit {{{1,1}, {1,0}}};
+
+   if (n == 0) {
+      return 0;
+   }
+   else if ( n == 1 ){
+      return 1;
+   }
+   else {
+      return nthPower(unit, n - 1 )[0][0];
+   }
+}
+
+
 int main() {
 
    std::vector<int> data = { 1, 3, 4, 1, 5, 8, 0, 2, 1, 3, 10, 0 };
@@ -242,6 +274,10 @@ int main() {
 
    for ( auto &i : dups ) {
       std::cout << i << std::endl;
+   }
+
+   for (int i = 0; i < 40; ++i ) {
+      std::cout << fibonacci(i) << std::endl;
    }
 
    return 0;

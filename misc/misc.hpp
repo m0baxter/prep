@@ -68,6 +68,5 @@ bool addTo( const int sum, const std::array<int, n> values ) {
    return false;
 }
 
-
 #endif
 
