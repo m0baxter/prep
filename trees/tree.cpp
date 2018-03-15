@@ -30,7 +30,7 @@ int main() {
    t.postorder();
    std::cout << std::endl;
 
-   std::cout << t.getPointer( 7 )->getVal() << std::endl;
+   t.print();
 
    return 0;
 }

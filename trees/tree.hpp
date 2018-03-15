@@ -1,6 +1,7 @@
 
 #include <cstdlib>
 #include <algorithm>
+#include <queue>
 
 #ifndef BINARYTREE_HPP
 #define BINARYTREE_HPP
@@ -60,6 +61,7 @@ class Tree {
       Node<T>* getRoot()  { return root; };
       Node<T>* getLeft()  { return root->getLeft(); };
       Node<T>* getRight() { return root->getRight(); };
+      void print();
 };
 
 template<class T>
@@ -195,6 +197,45 @@ Node<T>* Tree<T>::getPointer( T val ) {
    }
 
    return res;
+}
+
+template<class T>
+void Tree<T>::print() {
+
+   std::queue< Node<T>* > row;
+   row.push(root);
+
+   while ( !row.empty() ) {
+
+      std::queue< Node<T>* > next;
+
+      while ( !row.empty() ) {
+
+         Node<T> *n = row.front();
+         row.pop();
+
+         if ( n != nullptr ) {
+            std::cout << n->getVal() << "  ";
+         }
+
+         if ( n->getLeft() != nullptr ) {
+            next.push( n->getLeft() );
+         }
+         if ( n->getRight() != nullptr ) {
+            next.push( n->getRight() );
+         }
+      }
+
+      std::cout << std::endl;
+
+      row = next;
+   }
+}
+
+template<class T>
+Tree<T> Tree<T>::toLinkedList() {
+
+
 }
 
 #endif

@@ -106,6 +106,22 @@ std::set< char > common( const std::string &s1, const std::string &s2 ) {
 }
 
 
+void permutations( std::string str, std::string out ) {
+   /*Prints all permutations of the string str.*/
+
+   if ( str.size() == 0 ) {
+      std::cout << out << std::endl; 
+      return;
+   }
+
+   for ( int i = 0; i < str.size(); ++i ) {
+      permutations( str.substr(1), out + str[0] );
+
+      rotate( str.begin(), str.begin() + 1, str.end() );
+   }
+}
+
+
 int main() {
 
    std::cout << allUnique("1234") << std::endl;
@@ -134,6 +150,8 @@ int main() {
    std::cout << i << "   " << s << std::endl;
 
    std::cout << numberOf( 30, 2 ) << std::endl;
+
+   permutations("abcd", "");
 
    return 0;
 }
