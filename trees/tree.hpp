@@ -62,6 +62,7 @@ class Tree {
       Node<T>* getLeft()  { return root->getLeft(); };
       Node<T>* getRight() { return root->getRight(); };
       void print();
+      Node<T>* kthNode( int& );
 };
 
 template<class T>
@@ -233,9 +234,30 @@ void Tree<T>::print() {
 }
 
 template<class T>
-Tree<T> Tree<T>::toLinkedList() {
+Node<T>* Tree<T>::kthNode( int &k ) {
 
+   Node<T> *res = nullptr;
 
+   if ( root != nullptr ) {
+
+      if( root->getLeft() != nullptr ) {
+         res = Tree<T>( root->getLeft() ).kthNode( k );
+      }
+
+      if ( res == nullptr ) {
+         if ( k == 0 ) {
+            res = root;
+         }
+
+         k--;
+      }
+
+      if ( res == nullptr and ( root->getRight() != nullptr ) ) {
+         res = Tree<T>( root->getRight() ).kthNode( k );
+      }
+   }
+
+   return res;
 }
 
 #endif

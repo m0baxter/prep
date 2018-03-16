@@ -268,17 +268,9 @@ int fibonacci( const int n ) {
 
 int main() {
 
-   std::vector<int> data = { 1, 3, 4, 1, 5, 8, 0, 2, 1, 3, 10, 0 };
+   std::array<int,7> data = {1, 2, 3, 4, 4, 4, 5};
 
-   std::vector<int> dups = duplicates( data );
-
-   for ( auto &i : dups ) {
-      std::cout << i << std::endl;
-   }
-
-   for (int i = 0; i < 40; ++i ) {
-      std::cout << fibonacci(i) << std::endl;
-   }
+   std::cout << countVal<int, data.size()>( data, 4 ) << std::endl;
 
    return 0;
 }

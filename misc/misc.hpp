@@ -54,6 +54,76 @@ bool find( std::array<T,n> data, T val ) {
    return false;
 }
 
+template<class T, int n>
+int getFirst( std::array<T,n> data, T val, int start, int end ) {
+
+   if ( start > end ) {
+      return -1;
+   }
+   else { 
+      int s = start;
+      int e = end;
+      int check = (start + end)/2;
+
+      if ( data[check] == val ) {
+         if ( (check > 0 and data[check - 1]) or (check == 0) ) {
+            return check;
+         }
+         e = check - 1;
+      }
+      else if ( data[check] > val ) {
+         e = check - 1;
+      }
+      else{
+         s = check + 1;
+      }
+
+      return getFirst<T,n>( data, val, s, e );
+   }
+}
+
+template<class T, int n>
+int getLast( std::array<T,n> data, T val, int start, int end ) {
+
+   if ( start > end ) {
+      return -1;
+   }
+   else { 
+      int check = (start + end)/2;
+      int s =start;
+      int e = end;
+
+      if ( data[check] == val ) {
+         if ( (check < n - 1 and data[check + 1] != val ) or (check == n - 1) ) {
+            return check;
+         }
+         start = check + 1;
+      }
+      else if ( data[check] > val ) {
+         end = check - 1;
+      }
+      else{
+         start = check + 1;
+      }
+
+      return getLast<T,n>( data, val, start, end );
+   }
+}
+
+template<class T, int n>
+int countVal( std::array<T,n> data, T val ) {
+
+   int first = getFirst<T,n>( data, val, 0, n - 1 );
+   int last  = getLast<T,n>(  data, val, 0, n - 1 );
+
+   if ( (first > -1) and (last > -1) ) {
+      return last - first + 1;
+   }
+   else{
+      return 0;
+   }
+}
+
 
 template<int n>
 bool addTo( const int sum, const std::array<int, n> values ) {

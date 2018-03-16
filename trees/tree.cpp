@@ -32,6 +32,10 @@ int main() {
 
    t.print();
 
+   int i = 6;
+
+   std::cout << t.kthNode( i )->getVal() << std::endl;
+
    return 0;
 }
 
