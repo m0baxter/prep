@@ -3,8 +3,10 @@
 #include <string>
 #include <vector>
 #include <set>
+#include <map>
 #include <algorithm>
 #include <sstream>
+#include <locale>
 #include "stringThings.hpp"
 
 
@@ -138,6 +140,56 @@ std::string deleteFrom( std::string s1, std::string s2 ) {
    return out;
 }
 
+std::string keepFirst( std::string s ) {
+   /*Removes duplicates from a string keeping the first occurences.*/
+
+   std::string out = "";
+   std::set<char> letters;
+
+   for ( char &c : s ) {
+      if ( !letters.count(c) ) {
+         out = out.insert( out.size(), 1, c);
+      }
+
+      letters.insert(c);
+   }
+
+   return out;
+}
+
+bool areAnagrams( std::string s1, std::string s2 ) {
+   /*Check if the tow strings are anagrams.*/
+
+   if ( s1.size() != s2.size() ) {
+      return false;
+   }
+   else {
+      std::map<char, int> letters1;
+      std::map<char, int> letters2;
+
+      for ( int i = 0; i < s1.size(); ++i ) {
+         char c1 = std::tolower( s1[i], std::locale());
+         char c2 = std::tolower( s2[i], std::locale());
+
+         if ( letters1.count( c1 ) ) {
+            letters1[c1] += 1;
+         }
+         else {
+            letters1[c1] = 1;
+         }
+
+         if ( letters2.count( c2 ) ) {
+            letters1[c2] += 1;
+         }
+         else {
+            letters2[c2] = 1;
+         }
+      }
+
+      return letters1 == letters2;
+   }
+}
+
 
 int main() {
 
@@ -167,6 +219,9 @@ int main() {
    std::cout << i << "   " << s << std::endl;
 
    std::cout << deleteFrom("aeiou", "we are students.")<< std::endl;
+   std::cout << keepFirst("112012") << std::endl;
+   std::cout << areAnagrams("Cat", "act") << std::endl;
+
 
    return 0;
 }
