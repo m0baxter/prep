@@ -265,12 +265,68 @@ int fibonacci( const int n ) {
    }
 }
 
+int fasterFibonacci( const int n ) {
+   /*A slightly more efficient Fibonacci generator.*/
+
+   if ( n == 0 ) {
+      return 0;
+   }
+   else if ( n == 1 ) {
+      return 1;
+   }
+   else if ( n == 2) {
+      return 1;
+   }
+   else if ( n % 2 == 0 ) {
+      int a = fasterFibonacci( n/2 );
+      int b = fasterFibonacci( n/2 + 1 );
+
+      return a*( 2*b - a );
+   }
+   else if ( n % 2 == 1 ) {
+      int a = fasterFibonacci( (n+1)/2 );
+      int b = fasterFibonacci( (n-1)/2 );
+
+      return a*a + b*b;
+   }
+}
+
+
+void simulateDice( unsigned int n, unsigned int nRolls ) {
+   /*Approximates the probability of rolling a given number using n dice.*/
+
+   std::map<int,int> totals;
+
+   std::random_device rd;
+   std::mt19937 mt(rd());
+   std::uniform_int_distribution<int> dist(1, 6);
+
+   for (int i = 0; i < nRolls; ++i ) {
+      int sum = 0;
+
+      for ( int k = 0; k < n; ++k ) {
+         sum += dist(mt);
+      }
+
+      if ( !totals.count(sum) ) {
+         totals[sum] = 1;
+      }
+      else {
+         totals[sum] += 1;
+      }
+   }
+
+   for ( auto &res : totals ) {
+      std::cout << "Total: " << res.first << "  Prob: " << (1.0*res.second)/nRolls << std::endl;
+   }
+}
+
 
 int main() {
 
-   std::array<int,7> data = {1, 2, 3, 4, 4, 4, 5};
-
-   std::cout << countVal<int, data.size()>( data, 4 ) << std::endl;
+   for ( int i = 0; i < 10; ++i ) {
+      std::cout << fasterFibonacci( i ) << std::endl;
+   }
 
    return 0;
 }

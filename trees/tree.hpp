@@ -235,6 +235,7 @@ void Tree<T>::print() {
 
 template<class T>
 Node<T>* Tree<T>::kthNode( int &k ) {
+   /*returns the kth node inorder.*/
 
    Node<T> *res = nullptr;
 

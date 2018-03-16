@@ -190,38 +190,25 @@ bool areAnagrams( std::string s1, std::string s2 ) {
    }
 }
 
+std::string rotate( std::string s, unsigned int k ) {
+   /*Left rotates the string around position k.*/
+
+   if ( k >= s.size() ) {
+      return s;
+   }
+
+   std::string out = "";
+
+   out += s.substr( k, s.size() );
+   out += s.substr( 0, k );
+
+   return out;
+}
+
 
 int main() {
 
-   std::cout << allUnique("1234") << std::endl;
-   std::cout << allUnique("1234123") << std::endl;
-
-   std::cout << revString( "this" ) << std::endl;
-
-   std::cout << isPermutation( "this", "tihs" ) << std::endl;
-   std::cout << isPermutation( "this", "tis" ) << std::endl;
-   std::cout << isPermutation( "this", "this" ) << std::endl;
-   std::cout << isPermutation( "this", "thisthis" ) << std::endl;
-
-   std::cout << revWords("This is a bunch of words") << std::endl;
-   std::cout << true << std::endl;
-
-   std::string s1 = "this is words.";
-   std::string s2 = "that is not.";
-   auto res = common( s1, s2 );
-
-   std::cout << s1 << "    " << s2 << std::endl;
-   std::cout << std::string(res.begin(), res.end()) << std::endl;
-
-   int i = fromString<int>("12");
-   std::string s = toString<int>(32);
-
-   std::cout << i << "   " << s << std::endl;
-
-   std::cout << deleteFrom("aeiou", "we are students.")<< std::endl;
-   std::cout << keepFirst("112012") << std::endl;
-   std::cout << areAnagrams("Cat", "act") << std::endl;
-
+   std::cout << rotate( "abcdefg", 6 ) << std::endl;
 
    return 0;
 }

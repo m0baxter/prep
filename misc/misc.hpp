@@ -60,7 +60,7 @@ int getFirst( std::array<T,n> data, T val, int start, int end ) {
    if ( start > end ) {
       return -1;
    }
-   else { 
+   else {
       int s = start;
       int e = end;
       int check = (start + end)/2;
@@ -88,7 +88,7 @@ int getLast( std::array<T,n> data, T val, int start, int end ) {
    if ( start > end ) {
       return -1;
    }
-   else { 
+   else {
       int check = (start + end)/2;
       int s =start;
       int e = end;
@@ -136,6 +136,21 @@ bool addTo( const int sum, const std::array<int, n> values ) {
    }
 
    return false;
+}
+
+template<class T, int n>
+std::vector<T> maxWindows( std::array<T,n> data, int window ) {
+   /*Returns a vector of maxs in a sliding window of size window.*/
+
+   std::vector<T> maxs;
+
+   for ( int start = 0; start < n; ++start ) {
+      if (start + window <= n ) {
+         maxs.push_back( *std::max_element( data.begin() + start, data.begin() + start + window ) );
+      }
+   }
+
+   return maxs;
 }
 
 #endif
