@@ -263,5 +263,92 @@ LinkedList<T> removeDups( LinkedList<T> list ) {
    }
 }
 
+template<class T>
+LinkedList<T> quickSort( LinkedList list ) {
+   /*Performs a quick sort on list.*/
+
+   if ( list.isEmpty() ) {
+      return LinkedList();
+   }
+   else {
+      std::tuple< LinkedList<T>, LinkedList<T>, LinkedList<T> > p = partition( list );
+
+      LinkedList lo    = std::get<0>(p);
+      LinkedList pivot = std::get<1>(p);
+      LinkedList hi    = std::get<0>(p);
+
+      return join( join( quickSort(lo), pivot), quickSort(hi) );
+   }
+}
+
+template<class T>
+std::tuple< LinkedList<T>, LinkedList<T>, LinkedList<T> > partition( LinkedList<T> list ) {
+   /*Partitions the list into pivot, elements lower than pivot, and those higher than pivot.*/
+
+   if ( list.isEmpty() ) {
+      return std::make_tuple( LinkedList<T>(), LinkedList<T>(), LinkedList<T>() );
+   }
+   else if ( list.size() == 1 ) {
+
+      LinkedList<T> pivot;
+      pivot.insert( list.element(0) );
+
+      return std::make_tuple( LinkedList<T>(), pivot, LinkedList<T>() );
+   }
+   else {
+
+      T p = list.element(0);
+
+      LinkedList<T> pivot;
+      LinkedList<T> lo;
+      LinkedList<T> hi;
+
+      Node<T> *n = list.begin();
+
+      while ( n != nullptr ) {
+
+         T val = n->getData();
+
+         if ( val < p ) {
+            lo.insert(val);
+         }
+         else if ( val > p ) {
+            hi.insert(val);
+         }
+         else {
+            pivot.insert(val);
+         }
+
+         n = n->getNext();
+      }
+
+      return std::make_tuple( lo, pivot, hi );
+   }
+}
+
+template<class T>
+LinkedList<T> join( LinkedList<T> l1, LinkedList<T> l2 ) {
+
+   LinkedList<T> res;
+
+   Node<T> *n = l1.begin();
+
+   while ( n != nullptr ) {
+
+      res.insert( n->getData() );
+      n = n->getNext();
+   }
+
+   n = l2.begin();
+   
+   while ( n != nullptr ) {
+
+      res.insert( n->getData() );
+      n = n->getNext();
+   }
+
+   return res;
+}
+
 #endif
 
