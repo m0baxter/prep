@@ -23,6 +23,24 @@ int main() {
 
    std::cout << "Linked list with a loop added by hand:  " << list.hasLoop() << std::endl;
 
+   std::vector<int> v = {7,1,2,3,4,9,8,5,6};
+
+   LinkedList<int> l;
+
+   for ( auto &i : v) {
+      l.insertTail(i);
+   }
+
+   std::cout << "Len: " << l.size() << std::endl;
+
+   LinkedList<int> sorted = quickSort( l );
+
+   std::cout << "Len: " << sorted.size() << std::endl;
+
+   for ( int i = 0; i < sorted.size(); ++i ) {
+      std::cout << sorted.element(i) << std::endl;
+   }
+
    return 0;
 }
 

@@ -1,4 +1,5 @@
 
+#include <tuple>
 #include <utility>
 #include "node.hpp"
 
@@ -264,18 +265,18 @@ LinkedList<T> removeDups( LinkedList<T> list ) {
 }
 
 template<class T>
-LinkedList<T> quickSort( LinkedList list ) {
+LinkedList<T> quickSort( LinkedList<T> list ) {
    /*Performs a quick sort on list.*/
 
    if ( list.isEmpty() ) {
-      return LinkedList();
+      return LinkedList<T>();
    }
    else {
       std::tuple< LinkedList<T>, LinkedList<T>, LinkedList<T> > p = partition( list );
 
-      LinkedList lo    = std::get<0>(p);
-      LinkedList pivot = std::get<1>(p);
-      LinkedList hi    = std::get<0>(p);
+      LinkedList<T> lo    = std::get<0>(p);
+      LinkedList<T> pivot = std::get<1>(p);
+      LinkedList<T> hi    = std::get<2>(p);
 
       return join( join( quickSort(lo), pivot), quickSort(hi) );
    }
@@ -285,13 +286,13 @@ template<class T>
 std::tuple< LinkedList<T>, LinkedList<T>, LinkedList<T> > partition( LinkedList<T> list ) {
    /*Partitions the list into pivot, elements lower than pivot, and those higher than pivot.*/
 
-   if ( list.isEmpty() ) {
+   if ( list.size() == 0 ) {
       return std::make_tuple( LinkedList<T>(), LinkedList<T>(), LinkedList<T>() );
    }
    else if ( list.size() == 1 ) {
 
       LinkedList<T> pivot;
-      pivot.insert( list.element(0) );
+      pivot.insertTail( list.element(0) );
 
       return std::make_tuple( LinkedList<T>(), pivot, LinkedList<T>() );
    }
@@ -303,23 +304,19 @@ std::tuple< LinkedList<T>, LinkedList<T>, LinkedList<T> > partition( LinkedList<
       LinkedList<T> lo;
       LinkedList<T> hi;
 
-      Node<T> *n = list.begin();
-
-      while ( n != nullptr ) {
-
-         T val = n->getData();
+      for ( int i = 0; i < list.size(); ++i ) {
+         std::cout << i << std::endl;
+         T val = list.element(i);
 
          if ( val < p ) {
-            lo.insert(val);
+            lo.insertTail(val);
          }
          else if ( val > p ) {
-            hi.insert(val);
+            hi.insertTail(val);
          }
-         else {
-            pivot.insert(val);
+         else if ( val == p ) {
+            pivot.insertTail(val);
          }
-
-         n = n->getNext();
       }
 
       return std::make_tuple( lo, pivot, hi );
@@ -331,21 +328,17 @@ LinkedList<T> join( LinkedList<T> l1, LinkedList<T> l2 ) {
 
    LinkedList<T> res;
 
-   Node<T> *n = l1.begin();
+   for ( int i =0; i < l1.size(); ++i ) {
 
-   while ( n != nullptr ) {
-
-      res.insert( n->getData() );
-      n = n->getNext();
+      res.insertTail( l1.element(i) );
    }
 
-   n = l2.begin();
-   
-   while ( n != nullptr ) {
+   for ( int i =0; i < l2.size(); ++i ) {
 
-      res.insert( n->getData() );
-      n = n->getNext();
+      res.insertTail( l2.element(i) );
    }
+
+   std::cout << "join len: " << res.size() << std::endl;
 
    return res;
 }
