@@ -12,6 +12,22 @@ class LinkedList {
       Node<T> *head, *tail;
 
    public:
+      ~LinkedList() {
+
+         if ( !hasLoop() ) {
+            Node<T> *current = head;
+            
+            while ( current != nullptr ) {
+               Node<T> *next = current->getNext();
+               
+               delete current;
+               current = next;
+            }
+            head = nullptr;
+            tail = nullptr;
+         }
+      };
+
       LinkedList() {
          head = nullptr;
          tail = nullptr;

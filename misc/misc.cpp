@@ -324,7 +324,7 @@ void simulateDice( unsigned int n, unsigned int nRolls ) {
 
 int main() {
 
-   for ( int i = 0; i < 10; ++i ) {
+   for ( int i = 0; i < 30; ++i ) {
       std::cout << fasterFibonacci( i ) << std::endl;
    }
 
