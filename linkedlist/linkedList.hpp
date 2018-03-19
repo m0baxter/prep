@@ -1,4 +1,5 @@
 
+#include <tuple>
 #include <utility>
 #include "node.hpp"
 
@@ -277,6 +278,85 @@ LinkedList<T> removeDups( LinkedList<T> list ) {
 
       return res;
    }
+}
+
+template<class T>
+LinkedList<T> quickSort( LinkedList<T> list ) {
+   /*Performs a quick sort on list.*/
+
+   if ( list.isEmpty() ) {
+      return LinkedList<T>();
+   }
+   else {
+      std::tuple< LinkedList<T>, LinkedList<T>, LinkedList<T> > p = partition( list );
+
+      LinkedList<T> lo    = std::get<0>(p);
+      LinkedList<T> pivot = std::get<1>(p);
+      LinkedList<T> hi    = std::get<2>(p);
+
+      return join( join( quickSort(lo), pivot), quickSort(hi) );
+   }
+}
+
+template<class T>
+std::tuple< LinkedList<T>, LinkedList<T>, LinkedList<T> > partition( LinkedList<T> list ) {
+   /*Partitions the list into pivot, elements lower than pivot, and those higher than pivot.*/
+
+   if ( list.size() == 0 ) {
+      return std::make_tuple( LinkedList<T>(), LinkedList<T>(), LinkedList<T>() );
+   }
+   else if ( list.size() == 1 ) {
+
+      LinkedList<T> pivot;
+      pivot.insertTail( list.element(0) );
+
+      return std::make_tuple( LinkedList<T>(), pivot, LinkedList<T>() );
+   }
+   else {
+
+      T p = list.element(0);
+
+      LinkedList<T> pivot;
+      LinkedList<T> lo;
+      LinkedList<T> hi;
+
+      for ( int i = 0; i < list.size(); ++i ) {
+         std::cout << i << std::endl;
+         T val = list.element(i);
+
+         if ( val < p ) {
+            lo.insertTail(val);
+         }
+         else if ( val > p ) {
+            hi.insertTail(val);
+         }
+         else if ( val == p ) {
+            pivot.insertTail(val);
+         }
+      }
+
+      return std::make_tuple( lo, pivot, hi );
+   }
+}
+
+template<class T>
+LinkedList<T> join( LinkedList<T> l1, LinkedList<T> l2 ) {
+
+   LinkedList<T> res;
+
+   for ( int i =0; i < l1.size(); ++i ) {
+
+      res.insertTail( l1.element(i) );
+   }
+
+   for ( int i =0; i < l2.size(); ++i ) {
+
+      res.insertTail( l2.element(i) );
+   }
+
+   std::cout << "join len: " << res.size() << std::endl;
+
+   return res;
 }
 
 #endif
