@@ -24,8 +24,19 @@ class LinkedList {
                delete current;
                current = next;
             }
-            head = nullptr;
-            tail = nullptr;
+         }
+      };
+
+      LinkedList( const LinkedList<T> &l) {
+
+         this->head = nullptr;
+         this->tail = nullptr;
+
+         Node<T> *n = l.head;
+
+         while ( n != nullptr ) {
+            this->insertTail( n->getData() );
+            n = n->getNext();
          }
       };
 
@@ -81,7 +92,7 @@ class LinkedList {
 
       size_t size(){
 
-         Node<T>* n = this -> begin();
+         Node<T>* n = head; //this -> begin();
          size_t len = 0;
 
          while (n != nullptr) {
@@ -294,7 +305,8 @@ LinkedList<T> quickSort( LinkedList<T> list ) {
       LinkedList<T> pivot = std::get<1>(p);
       LinkedList<T> hi    = std::get<2>(p);
 
-      return join( join( quickSort(lo), pivot), quickSort(hi) );
+      //return join( join( quickSort(lo), pivot), quickSort(hi) );
+      return quickSort(lo) + pivot + quickSort(hi);
    }
 }
 
@@ -321,7 +333,7 @@ std::tuple< LinkedList<T>, LinkedList<T>, LinkedList<T> > partition( LinkedList<
       LinkedList<T> hi;
 
       for ( int i = 0; i < list.size(); ++i ) {
-         std::cout << i << std::endl;
+
          T val = list.element(i);
 
          if ( val < p ) {
@@ -354,7 +366,23 @@ LinkedList<T> join( LinkedList<T> l1, LinkedList<T> l2 ) {
       res.insertTail( l2.element(i) );
    }
 
-   std::cout << "join len: " << res.size() << std::endl;
+   return res;
+}
+
+template<class T>
+LinkedList<T> operator+( LinkedList<T> l1, LinkedList<T> l2 ) {
+
+   LinkedList<T> res;
+
+   for ( int i =0; i < l1.size(); ++i ) {
+
+      res.insertTail( l1.element(i) );
+   }
+
+   for ( int i =0; i < l2.size(); ++i ) {
+
+      res.insertTail( l2.element(i) );
+   }
 
    return res;
 }

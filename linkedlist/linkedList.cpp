@@ -4,18 +4,6 @@
 #include "linkedList.hpp"
 
 
-void memoryTest() {
-
-   LinkedList<int> list;
-
-   for ( int i = 0; i < 100000000; ++i ) {
-      list.insertTail( i );
-   }
-
-   std::cout << "Length: " << list.size() << std::endl;
-}
-
-
 int main() {
 
    std::vector<int> vals = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
@@ -35,9 +23,18 @@ int main() {
 
    std::cout << "Linked list with a loop added by hand:  " << list.hasLoop() << std::endl;
 
-   memoryTest();
+   std::vector<int> v = {9,0,2,4,1,6,7,10,3,5};
+   LinkedList<int> l;
 
-   memoryTest();
+   for ( auto &i : v ) {
+      l.insertTail(i);
+   }
+
+   l = quickSort( l );
+
+   for ( int i = 0; i < l.size(); ++i ) {
+      std::cout << l.element(i) << std::endl;
+   }
 
    return 0;
 }
