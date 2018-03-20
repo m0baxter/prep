@@ -1,4 +1,5 @@
 
+#include <memory>
 #include <tuple>
 #include <utility>
 #include "node.hpp"
@@ -10,35 +11,9 @@ template<class T>
 class LinkedList {
 
    private:
-      Node<T> *head, *tail;
+      std::shared_ptr< Node<T> > head, tail;
 
    public:
-      ~LinkedList() {
-
-         if ( !hasLoop() ) {
-            Node<T> *current = head;
-            
-            while ( current != nullptr ) {
-               Node<T> *next = current->getNext();
-               
-               delete current;
-               current = next;
-            }
-         }
-      };
-
-      LinkedList( const LinkedList<T> &l) {
-
-         this->head = nullptr;
-         this->tail = nullptr;
-
-         Node<T> *n = l.head;
-
-         while ( n != nullptr ) {
-            this->insertTail( n->getData() );
-            n = n->getNext();
-         }
-      };
 
       LinkedList() {
          head = nullptr;
@@ -47,8 +22,7 @@ class LinkedList {
 
       void insertHead( T val ) {
 
-         Node<T>* newNode = new Node<T>(val, nullptr);
-         newNode->setData(val);
+         std::shared_ptr< Node<T> > newNode(new Node<T>(val, nullptr) );
 
          if ( head == nullptr ){
             head = newNode;
@@ -61,8 +35,8 @@ class LinkedList {
       }
 
       void insertTail( T val ) {
-         
-         Node<T>* newNode = new Node<T>(val, nullptr);
+
+         std::shared_ptr< Node<T> > newNode( new Node<T>(val, nullptr) );
 
          if ( tail == nullptr ) {
             head = newNode;
@@ -74,11 +48,11 @@ class LinkedList {
          }
       }
 
-      Node<T>* begin() {
+      std::shared_ptr< Node<T> > begin() {
          return head;
       }
 
-      Node<T>* end() {
+      std::shared_ptr< Node<T> > end() {
          return tail->getNext();
       }
 
@@ -92,7 +66,7 @@ class LinkedList {
 
       size_t size(){
 
-         Node<T>* n = head; //this -> begin();
+         std::shared_ptr< Node<T> >n = head; //this -> begin();
          size_t len = 0;
 
          while (n != nullptr) {
@@ -105,7 +79,7 @@ class LinkedList {
 
       T element( int k ) {
 
-         Node<T>* n = head;
+         std::shared_ptr< Node<T> > n = head;
 
          for (int i = 0; i < k; ++i) {
             n = n->getNext();
@@ -113,9 +87,9 @@ class LinkedList {
          return n->getData();
       }
 
-      Node<T>* nodeAt( int k ) {
+      std::shared_ptr< Node<T> > nodeAt( int k ) {
 
-         Node<T>* n = head;
+         std::shared_ptr< Node<T> > n = head;
 
          for (int i = 0; i < k; ++i) {
             n = n->getNext();
@@ -126,8 +100,8 @@ class LinkedList {
       bool hasLoop() {
          /*Detects the presence of a loop. This can never happend with this implementation...*/
 
-         Node<T>* single = head;
-         Node<T>* dooble = head;
+         std::shared_ptr< Node<T> > single = head;
+         std::shared_ptr< Node<T> > dooble = head;
 
          if (dooble != nullptr) {
             dooble = dooble->getNext();
@@ -159,7 +133,7 @@ std::pair< LinkedList<T>, LinkedList<T> > splitList( LinkedList<T> list ) {
    LinkedList<T> first, second;
 
    int n = list.size();
-   Node<T>* node = list.begin();
+   std::shared_ptr< Node<T> > node = list.begin();
 
    for (int i = 0; i < n; ++i) {
 
@@ -182,7 +156,7 @@ LinkedList<T> reverseList( LinkedList<T> list ) {
 
    LinkedList<T> rev;
 
-   Node<T>* n = list.begin();
+   std::shared_ptr< Node<T> > n = list.begin();
 
    while (n != nullptr) {
       rev.insertHead( n->getData() );
@@ -198,8 +172,8 @@ LinkedList<T> merge( LinkedList<T> l1, LinkedList<T> l2 ) {
 
    LinkedList<T> merged;
 
-   Node<T>* n1 = l1.begin();
-   Node<T>* n2 = l2.begin();
+   std::shared_ptr< Node<T> > n1 = l1.begin();
+   std::shared_ptr< Node<T> > n2 = l2.begin();
 
    int len1 = l1.size();
    int len2 = l2.size();
@@ -268,7 +242,7 @@ LinkedList<T> removeDups( LinkedList<T> list ) {
    }
    else {
       LinkedList<T> sList = mergeSort(list);
-      Node<T>* n = sList.begin();
+      std::shared_ptr< Node<T> > n = sList.begin();
 
       T prv = n -> getData();
       res.insertTail( prv );

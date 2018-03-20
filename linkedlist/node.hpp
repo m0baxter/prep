@@ -7,25 +7,25 @@ class Node {
 
    private:
       T data;
-      Node<T>* next;
+      std::shared_ptr< Node<T> > next;
 
    public:
-      Node( T, Node<T>*);
-      Node* getNext();
-      void setNext( Node<T>* );
+      Node( T, std::shared_ptr< Node<T> > );
+      std::shared_ptr< Node<T> > getNext();
+      void setNext( std::shared_ptr< Node<T> > );
       T getData();
       void setData( T );
 };
 
 template<class T>
-Node<T>::Node( T d, Node<T> *n ) {
+Node<T>::Node( T d, std::shared_ptr< Node<T> > n ) {
 
    data = d;
    next = n;
 }
 
 template<class T>
-Node<T>* Node<T>::getNext() {
+std::shared_ptr< Node<T> > Node<T>::getNext() {
    return next;
 }
 
@@ -35,7 +35,7 @@ T Node<T>::getData() {
 }
 
 template<class T>
-void Node<T>::setNext( Node<T>* n ) {
+void Node<T>::setNext( std::shared_ptr< Node<T> > n ) {
    next = n;
 }
 

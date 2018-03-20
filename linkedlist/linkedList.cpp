@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <vector>
+#include <memory>
 #include "linkedList.hpp"
 
 
@@ -17,8 +18,8 @@ int main() {
    std::cout << "Properly constructed linked list:  " << list.hasLoop() << std::endl;
 
    //Add a loop:
-   Node<int>* n1 = list.nodeAt(16);
-   Node<int>* n2 = list.nodeAt(5);
+   std::shared_ptr< Node<int> > n1 = list.nodeAt(16);
+   std::shared_ptr< Node<int> > n2 = list.nodeAt(5);
    n1->setNext(n2);
 
    std::cout << "Linked list with a loop added by hand:  " << list.hasLoop() << std::endl;
@@ -30,10 +31,10 @@ int main() {
       l.insertTail(i);
    }
 
-   l = quickSort( l );
+   LinkedList<int> sorted = quickSort( l );
 
    for ( int i = 0; i < l.size(); ++i ) {
-      std::cout << l.element(i) << std::endl;
+      std::cout << sorted.element(i) << std::endl;
    }
 
    return 0;
