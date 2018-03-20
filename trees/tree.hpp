@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include <queue>
+#include <memory>
 
 #ifndef BINARYTREE_HPP
 #define BINARYTREE_HPP
@@ -10,18 +11,18 @@ template<class T>
 class Node {
 
    private:
-      Node<T>* rChild;
-      Node<T>* lChild;
+      std::shared_ptr< Node<T> > rChild;
+      std::shared_ptr< Node<T> > lChild;
       T val;
 
    public:
       Node();
       Node( const T );
       T getVal() { return val; };
-      Node<T>* getLeft() { return lChild; };
-      Node<T>* getRight() { return rChild; };
-      void setLeft( Node<T>* n) { lChild = n; };
-      void setRight( Node<T>* n) { rChild = n; };
+      std::shared_ptr< Node<T> > getLeft() { return lChild; };
+      std::shared_ptr< Node<T> > getRight() { return rChild; };
+      void setLeft( std::shared_ptr< Node<T> > n) { lChild = n; };
+      void setRight( std::shared_ptr< Node<T> > n) { rChild = n; };
 };
 
 template<class T>
@@ -44,11 +45,11 @@ template<class T>
 class Tree {
 
    private:
-      Node<T>* root;
+      std::shared_ptr< Node<T> > root;
 
    public:
       Tree() { root = nullptr; };
-      Tree( Node<T>* node ) { root = node; };
+      Tree( std::shared_ptr< Node<T> > node ) { root = node; };
       void insert( const T );
       void remove( const T );
       bool isIn( const T );
@@ -57,18 +58,18 @@ class Tree {
       void postorder();
       void preorder();
       bool isBalanced();
-      Node<T>* getPointer( T );
-      Node<T>* getRoot()  { return root; };
-      Node<T>* getLeft()  { return root->getLeft(); };
-      Node<T>* getRight() { return root->getRight(); };
+      std::shared_ptr< Node<T> > getPointer( T );
+      std::shared_ptr< Node<T> > getRoot()  { return root; };
+      std::shared_ptr< Node<T> > getLeft()  { return root->getLeft(); };
+      std::shared_ptr< Node<T> > getRight() { return root->getRight(); };
       void print();
-      Node<T>* kthNode( int& );
+      std::shared_ptr< Node<T> > kthNode( int& );
 };
 
 template<class T>
 void Tree<T>::insert( const T val ) {
 
-   Node<T>* newNode = new Node<T>( val );
+   std::shared_ptr< Node<T> > newNode(new Node<T>( val ) );
 
    if (root == nullptr) {
       root = newNode;
@@ -175,9 +176,9 @@ bool Tree<T>::isBalanced() {
 
 
 template<class T>
-Node<T>* Tree<T>::getPointer( T val ) {
+std::shared_ptr< Node<T> > Tree<T>::getPointer( T val ) {
 
-   Node<T> *res = nullptr;
+   std::shared_ptr< Node<T> > res = nullptr;
 
    if ( root != nullptr ) {
 
@@ -203,16 +204,16 @@ Node<T>* Tree<T>::getPointer( T val ) {
 template<class T>
 void Tree<T>::print() {
 
-   std::queue< Node<T>* > row;
+   std::queue< std::shared_ptr< Node<T> > > row;
    row.push(root);
 
    while ( !row.empty() ) {
 
-      std::queue< Node<T>* > next;
+      std::queue< std::shared_ptr< Node<T> > > next;
 
       while ( !row.empty() ) {
 
-         Node<T> *n = row.front();
+         std::shared_ptr< Node<T> > n = row.front();
          row.pop();
 
          if ( n != nullptr ) {
@@ -234,10 +235,10 @@ void Tree<T>::print() {
 }
 
 template<class T>
-Node<T>* Tree<T>::kthNode( int &k ) {
+std::shared_ptr< Node<T> > Tree<T>::kthNode( int &k ) {
    /*returns the kth node inorder.*/
 
-   Node<T> *res = nullptr;
+   std::shared_ptr< Node<T> > res = nullptr;
 
    if ( root != nullptr ) {
 

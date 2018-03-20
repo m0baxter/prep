@@ -227,7 +227,7 @@ LinkedList<T> mergeSort( LinkedList<T> list ) {
    }
    else {
       std::pair< LinkedList<T>, LinkedList<T> > split = splitList(list);
-      return merge( mergeSort( split.first  ), mergeSort( split.second ) );
+      return merge( mergeSort( split.first ), mergeSort( split.second ) );
    }
 }
 
@@ -323,24 +323,6 @@ std::tuple< LinkedList<T>, LinkedList<T>, LinkedList<T> > partition( LinkedList<
 
       return std::make_tuple( lo, pivot, hi );
    }
-}
-
-template<class T>
-LinkedList<T> join( LinkedList<T> l1, LinkedList<T> l2 ) {
-
-   LinkedList<T> res;
-
-   for ( int i =0; i < l1.size(); ++i ) {
-
-      res.insertTail( l1.element(i) );
-   }
-
-   for ( int i =0; i < l2.size(); ++i ) {
-
-      res.insertTail( l2.element(i) );
-   }
-
-   return res;
 }
 
 template<class T>
