@@ -3,6 +3,7 @@
 #include <vector>
 #include <set>
 #include <numeric>
+#include <cmath>
 
 
 std::vector<int> range( const int start, const int end ) {
@@ -37,11 +38,16 @@ std::set<int> primesRange( const int n ) {
 
 int main( int argc, char** argv ){
 
-   std::set<int> primes = primesRange( 1000000 );
+   int n = pow(10,4);
+
+   std::set<int> primes = primesRange( n );
 
    for ( auto &i : primes ) {
       std::cout << i << std::endl;
    }
+
+   std::cout << "Range: 2-" << n << std::endl;
+   std::cout << "Number of primes: " << primes.size() << std::endl;
 
    return 0;
 }

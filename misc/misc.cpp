@@ -12,6 +12,8 @@
 #include "misc.hpp"
 
 
+std::map<unsigned long, unsigned long> fibCache = {{0, 0}, {1, 1}, {2, 1}};
+
 unsigned int numberOfOnes( unsigned int a ) {
    /*Counts the number of bits set to 1 in the integer a.*/
 
@@ -265,29 +267,29 @@ int fibonacci( const int n ) {
    }
 }
 
-int fasterFibonacci( const int n ) {
+unsigned long long fasterFibonacci( const unsigned long long n ) {
    /*A slightly more efficient Fibonacci generator.*/
 
-   if ( n == 0 ) {
-      return 0;
-   }
-   else if ( n == 1 ) {
-      return 1;
-   }
-   else if ( n == 2) {
-      return 1;
+   if ( fibCache.count(n) ) {
+      return fibCache[n];
    }
    else if ( n % 2 == 0 ) {
-      int a = fasterFibonacci( n/2 );
-      int b = fasterFibonacci( n/2 + 1 );
+      unsigned long a = fasterFibonacci( n/2 );
+      unsigned long b = fasterFibonacci( n/2 + 1 );
+      unsigned long f = a*( 2*b - a );
 
-      return a*( 2*b - a );
+      fibCache[n] = f;
+
+      return f;
    }
    else if ( n % 2 == 1 ) {
-      int a = fasterFibonacci( (n+1)/2 );
-      int b = fasterFibonacci( (n-1)/2 );
+      unsigned long a = fasterFibonacci( (n+1)/2 );
+      unsigned long b = fasterFibonacci( (n-1)/2 );
+      unsigned long f = a*a + b*b;
 
-      return a*a + b*b;
+      fibCache[n] = f;
+
+      return f;
    }
 }
 
@@ -324,9 +326,16 @@ void simulateDice( unsigned int n, unsigned int nRolls ) {
 
 int main() {
 
-   for ( int i = 0; i < 30; ++i ) {
-      std::cout << fasterFibonacci( i ) << std::endl;
+   for ( unsigned long i = 0; i < 94; ++i ) {
+      std::cout << fasterFibonacci( i ) << "\n" << std::endl;
    }
+
+   std::cout << "int:        " << sizeof(int)                << std::endl;
+   std::cout << "uint:       " << sizeof(unsigned int)       << std::endl;
+   std::cout << "ulong:      " << sizeof(long)               << std::endl;
+   std::cout << "ulong:      " << sizeof(unsigned long)      << std::endl;
+   std::cout << "long long:  " << sizeof(long long)          << std::endl;
+   std::cout << "ulong long: " << sizeof(unsigned long long) << std::endl;
 
    return 0;
 }
