@@ -28,5 +28,6 @@ std::string toString( T val ) {
 
    return s;
 }
+
 #endif
 
