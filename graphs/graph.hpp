@@ -1,24 +1,26 @@
 
-#include <set>
-#include <vector>
+#ifndef GRAPH_HPP
+#define GRAPH_HPP
 
-#ifndef GRAPHS_HPP
-#define GRAPHS_HPP
+#include <unordered_map>
+#include <unordered_set>
+#include <stack>
+#include <queue>
 
-class Graph {
+class Graph{
 
    private:
-      std::vector< std::set<int> > adjacency;
+      std::unordered_map<int, std::unordered_set<int> > adj;
 
    public:
-      Graph( size_t n ) { adjacency = std::vector< std::set<int> >(n); }
-      void addEdge( const int, const int );
-      void addDirectedEdge( const int, const int );
+      void addNode( const int );
+      void addEdgeD( const int, const int );
+      void addEdgeB( const int, const int );
       bool isPath( const int, const int );
-      bool hasLoop( const int );
-      //std::stack<int> path( const int, const int );
-      std::vector<int> path( const int, const int );
-      void print();
+      std::vector< std::unordered_set<int> > connectedComponents();
+      bool connected() { return connectedComponents().size() <= 1; };
+      std::vector<int> path(const int, const int );
+      std::vector<int> shortestPath( const int, const int );
 };
 
 #endif

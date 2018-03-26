@@ -1,90 +1,108 @@
 
 #include <iostream>
-#include <stack>
-#include <queue>
+#include <vector>
+#include <unordered_set>
 #include "graph.hpp"
 
+void Graph::addNode( const int n ) {
+   /*Adds a node to the graph.*/
 
-void Graph::addEdge( const int source, const int destination ) {
-   /*Creates an edge between vertices labeled by source and destination.*/
-
-   adjacency.at(source).insert(destination);
-   adjacency.at(destination).insert(source);
-}
-
-void Graph::addDirectedEdge( const int source, const int destination ) {
-   /*Creates an edge between vertices labeled by source and destination.*/
-
-   adjacency.at(source).insert(destination);
-}
-
-void Graph::print() {
-   int i = 0;
-
-   for (auto &adj : adjacency) {
-
-         std::cout << "Node " << i << ": ";
-
-      for (auto &node : adj){
-         std::cout << node << "   ";
-      }
-      ++i;
-      std::cout << std::endl;
+   if ( !adj.count(n) ) {
+      adj[n] = std::unordered_set<int>();
    }
+}
+
+void Graph::addEdgeD( const int src, const int dst ) {
+   /*Add a directed esdge between dst and src nodes.*/
+
+   adj[src].insert(dst);
+}
+
+void Graph::addEdgeB( const int src, const int dst ) {
+   /*Add a bodirectional edge between the two nodes.*/
+
+   adj[src].insert(dst);
+   adj[dst].insert(src);
 }
 
 bool Graph::isPath( const int start, const int end ) {
-   /*Find a path from start to end.*/
+   /*Determines whether a path exists between nodes start and end.*/
 
-   std::stack<int> possible;
-   std::stack<int> path;
-   //possible.push(start);
-   std::set<int> visited;
+   std::unordered_set<int> visited = { start };
+   std::stack<int> possible( { start } ); //or: std::queue<int> possible( { start } );
 
-   int node = start;
+   while ( !possible.empty() ) {
 
-   while ( node != end ) {
+      int next = possible.top(); //or: int next = possible.front();
+      possible.pop();
+      visited.insert(next);
 
-      std::cout << "Node: " <<  node << std::endl;
+      for ( auto &n : adj[next] ) {
 
-      bool foundUnvisited = false;
-      for ( auto &n : adjacency.at(node) ) {
+         if ( n == end ) {
+            return true;
+         }
          if ( !visited.count(n) ) {
-            path.push(node);
-            visited.insert(n);
-            node = n;
-            foundUnvisited = true;
-            break;
+            possible.push(n);
          }
-      }
-      if ( !foundUnvisited ) {
-         if( path.empty() ) {
-            return false; // empty route means no route found
-         }
-         node = path.top();
-         path.pop();
       }
    }
 
-   path.push( end );
+   return false;
+}
 
-   return true;
+std::vector< std::unordered_set<int> > Graph::connectedComponents() {
+
+   std::vector< std::unordered_set<int> > components;
+   std::unordered_set<int> visited;
+
+   for ( auto &p : adj ) {
+
+      int node = p.first;
+
+      if ( !visited.count(node) ) {
+         
+         visited.insert(node);
+
+         std::unordered_set<int> reachable = { node };
+         std::queue<int> possible( {node} );
+
+         while ( !possible.empty() ) {
+
+            int next = possible.front();
+            possible.pop();
+
+            visited.insert( next );
+            reachable.insert( next );
+
+            for ( auto &n : adj[next] ) {
+               if ( !visited.count(n) ) {
+                  possible.push( n );
+               }
+            }
+         }
+
+         components.push_back( reachable );
+      }
+   }
+
+   return components;
 }
 
 std::vector<int> Graph::path( const int start, const int end ) {
-   /*Find a path from start to end.*/
+   /*Returns a path from start to end. If no path exists returns an empty vector.*/
 
    std::stack<int> possible;
    std::vector<int> path;
-   std::set<int> visited = {start};
+   std::unordered_set<int> visited = { start };
 
    int node = start;
 
    while ( node != end ) {
-
+      
       bool foundUnvisited = false;
 
-      for ( auto &n : adjacency.at(node) ) {
+      for ( auto &n : adj[node] ) {
          if ( !visited.count(n) ) {
             path.push_back(node);
             visited.insert(n);
@@ -93,10 +111,12 @@ std::vector<int> Graph::path( const int start, const int end ) {
             break;
          }
       }
+
       if ( !foundUnvisited ) {
-         if( path.empty() ) {
-            return path; // empty route means no route found
+         if ( path.empty() ) {
+            return path;
          }
+
          node = path.back();
          path.pop_back();
       }
@@ -107,23 +127,77 @@ std::vector<int> Graph::path( const int start, const int end ) {
    return path;
 }
 
+std::vector<int> Graph::shortestPath( const int start, const int end ) {
+   /*Finds a shortest path between two nodes.*/
+
+   std::queue< std::vector<int> > paths;
+   paths.push( {start} );
+   int shortest = adj.size() + 1;
+   std::vector<int> shortPath;
+
+   while ( !paths.empty() ) {
+
+      std::vector<int> path = paths.front();
+      paths.pop();
+
+      int node = path.back();
+
+      for ( auto &n : adj[node] ) {
+
+         std::vector<int> p = path;
+         p.push_back(n);
+
+         if ( p.size() <= shortest ) {
+            if ( n == end ) {
+               std::cout << "Shortest: " << p.size() << std::endl;
+               shortest = p.size();
+               shortPath = p;
+            }
+
+            paths.push(p);
+         }
+      }
+   }
+
+   return shortPath;
+}
+
 int main() {
 
-   Graph g(5);
+   Graph g;
 
-   g.addEdge(0,1);
-   g.addEdge(1,2);
-   g.addEdge(2,3);
-   g.addEdge(3,0);
-   g.addEdge(0,4);
-   g.print();
+   g.addNode(1);
+   g.addNode(2);
+   g.addNode(3);
+   g.addNode(4);
+   g.addNode(5);
+   g.addNode(6);
+   g.addNode(7);
+   g.addNode(8);
 
-   std::cout << std::endl;
+   g.addEdgeB( 1, 2);
+   g.addEdgeB( 1, 3);
+   g.addEdgeB( 1, 7);
+   g.addEdgeB( 2, 3);
+   g.addEdgeB( 3, 4);
+   g.addEdgeB( 3, 6);
+   g.addEdgeB( 3, 5);
+   g.addEdgeB( 5, 4);
+   g.addEdgeB( 5, 6);
+   g.addEdgeB( 4, 6);
+   g.addEdgeB( 6, 7);
 
-   std::vector<int> path = g.path(4, 3);
+   std::vector<int> path = g.shortestPath( 1, 7 );
 
-   for ( auto &n : path ) {
-      std::cout << n << std::endl;
+   if ( path.empty() ) {
+      std::cout << "No path." << std::endl;
+   }
+   else {
+      for ( int i = 0; i < path.size() - 1; ++i ) {
+         std::cout << path[i] << " -> ";
+      }
+      
+      std::cout << path[ path.size() - 1 ] << std::endl;
    }
 
    return 0;
