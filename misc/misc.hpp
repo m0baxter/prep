@@ -1,8 +1,8 @@
 
-#include <array>
-
 #ifndef MISC_HPP
 #define MISC_HPP
+
+#include <array>
 
 template<class T, int m, int l, int n>
 
@@ -26,7 +26,6 @@ std::array< std::array<T, m>, n> multiply( std::array< std::array<T, m>, l> A, s
 
    return C;
 }
-
 
 template<class T, int n>
 bool find( std::array<T,n> data, T val ) {
@@ -123,7 +122,6 @@ int countVal( std::array<T,n> data, T val ) {
       return 0;
    }
 }
-
 
 template<int n>
 bool addTo( const int sum, const std::array<int, n> values ) {

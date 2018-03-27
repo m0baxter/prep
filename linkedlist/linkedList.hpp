@@ -1,11 +1,11 @@
 
+#ifndef LINKEDLIST_HPP
+#define LINKEDLIST_HPP
+
 #include <memory>
 #include <tuple>
 #include <utility>
 #include "node.hpp"
-
-#ifndef LINKEDLIST_HPP
-#define LINKEDLIST_HPP
 
 template<class T>
 class LinkedList {

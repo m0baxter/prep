@@ -5,7 +5,6 @@
 #include <numeric>
 #include <cmath>
 
-
 std::vector<int> range( const int start, const int end ) {
    /*Returns a vector of all integers [start, end].*/
 
@@ -14,7 +13,6 @@ std::vector<int> range( const int start, const int end ) {
 
    return v;
 }
-
 
 std::set<int> primesRange( const int n ) {
    /*Returns all primes in the range 1 to n.*/
@@ -34,7 +32,6 @@ std::set<int> primesRange( const int n ) {
 
    return primes;
 }
-
 
 int main( int argc, char** argv ){
 

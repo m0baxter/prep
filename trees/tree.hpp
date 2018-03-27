@@ -1,11 +1,11 @@
 
+#ifndef BINARYTREE_HPP
+#define BINARYTREE_HPP
+
 #include <cstdlib>
 #include <algorithm>
 #include <queue>
 #include <memory>
-
-#ifndef BINARYTREE_HPP
-#define BINARYTREE_HPP
 
 template<class T>
 class Node {
@@ -40,7 +40,6 @@ Node<T>::Node( const T v ) {
    lChild = nullptr;
 }
 
-
 template<class T>
 class Tree {
 
@@ -69,7 +68,7 @@ class Tree {
 template<class T>
 void Tree<T>::insert( const T val ) {
 
-   std::shared_ptr< Node<T> > newNode(new Node<T>( val ) );
+   std::shared_ptr< Node<T> > newNode( new Node<T>( val ) );
 
    if (root == nullptr) {
       root = newNode;
