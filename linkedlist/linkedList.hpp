@@ -181,7 +181,7 @@ LinkedList<T> merge( LinkedList<T> l1, LinkedList<T> l2 ) {
    int i1 = 0;
    int i2 = 0;
 
-   while (  (i1 < len1) || (i2 < len2 ) ) {
+   while ( (i1 < len1) || (i2 < len2 ) ) {
 
       if (i1 == len1) {
          merged.insertTail( n2->getData() );

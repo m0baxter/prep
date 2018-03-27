@@ -261,5 +261,28 @@ std::shared_ptr< Node<T> > Tree<T>::kthNode( int &k ) {
    return res;
 }
 
+template<class T>
+bool equal( Tree<T> t1, Tree<T> t2 ) {
+   /*Determines whether the two trees are the same by structure and values.*/
+
+   if ( t1.getRoot() != nullptr and t2.getRoot() == nullptr ) {
+      return false;
+   }
+
+   else if ( t1.getRoot() == nullptr and t2.getRoot() != nullptr ) {
+      return false;
+   }
+
+   else if ( t1.getRoot() == nullptr and t2.getRoot() == nullptr ) {
+      return true;
+   }
+
+   else {
+      return ( t1.getRoot()->getVal() == t2.getRoot()->getVal() )
+         and equal( Tree<T>( t1.getLeft()  ), Tree<T>( t2.getLeft() )  )
+         and equal( Tree<T>( t1.getRight() ), Tree<T>( t2.getRight() ) );
+   }
+}
+
 #endif
 
