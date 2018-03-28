@@ -33,8 +33,29 @@ bool isPermutation( const std::string s1, const std::string s2 ) {
 
    if ( s1.size() == s2.size() ) {
 
-      std::set<char> set1( s1.begin(), s1.end() );
-      std::set<char> set2( s2.begin(), s2.end() );
+      std::map<char, int> set1;
+      std::map<char, int> set2;
+
+      for ( int i = 0; i < s1.size(); ++i ) {
+
+         char c1 = s1[i];
+         char c2 = s2[i];
+
+         if ( set1.count( c1 ) ) {
+            set1[c1] += 1;
+         }
+         else {
+            set1[c1] = 1;
+         }
+
+         if ( set2.count( c2 ) ) {
+            set2[c2] += 1;
+         }
+         else {
+            set2[c2] = 1;
+         }
+
+      }
       
       return ( set1 == set2 );
    }
@@ -50,22 +71,28 @@ std::string revWords( const std::string s ) {
 
    std::string reversed = s;
 
-   size_t pos = 0;
-   size_t prev = 0;
-
-   bool notFirst = false;
-
-   while ( pos != std::string::npos ) {
-
-      prev = pos;
-      pos = s.find(" ", pos + 1);
-
-      std::reverse( reversed.begin() + prev + notFirst, reversed.begin() + pos);
-
-      notFirst = true;
+   if ( s.find(" ", 0) == std::string::npos ) {
+      std::reverse( reversed.begin(), reversed.end() );
    }
+   else {
+      
+      size_t pos = 0;
+      size_t prev = 0;
 
-   std::reverse( reversed.begin() + prev +1 , reversed.end() );
+      bool notFirst = false;
+
+      while ( pos != std::string::npos ) {
+
+         prev = pos;
+         pos = s.find(" ", pos + 1);
+
+         std::reverse( reversed.begin() + prev + notFirst, reversed.begin() + pos);
+
+         notFirst = true;
+      }
+
+      std::reverse( reversed.begin() + prev + 1 , reversed.end() );
+   }
 
    return reversed;
 }
@@ -209,6 +236,8 @@ std::string rotate( std::string s, unsigned int k ) {
 int main() {
 
    std::cout << rotate( "abcdefg", 6 ) << std::endl;
+   std::cout << revWords( "abcdefg ab" ) << std::endl;
+   std::cout << revWords( "123456" ) << std::endl;
 
    return 0;
 }
