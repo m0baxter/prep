@@ -1,8 +1,8 @@
 
-#include <vector>
-
 #ifndef MYQUEUE_HPP
 #define MYQUEUE_HPP
+
+#include <vector>
 
 template<class T>
 class MyQueue {
@@ -11,18 +11,11 @@ class MyQueue {
       std::vector<T> front, back;
 
    public:
-      void add( const T );
+      void add( const T a ) { back.push_back(a); };
       T pop();
-      size_t size();
+      size_t size() { return front.size() + back.size(); };
+      bool empty() { return front.empty() and back.empty(); };
 };
-
-
-template<class T>
-void MyQueue<T>::add( const T a ) {
-   /*Add an element to the back of the queue.*/
-
-   back.push_back(a);
-}
 
 template<class T>
 T MyQueue<T>::pop() {
@@ -43,13 +36,6 @@ T MyQueue<T>::pop() {
 
       return val;
    }
-}
-
-template<class T>
-size_t MyQueue<T>::size() {
-   /*Returns the length of the queue.*/
-
-   return front.size() + back.size();
 }
 
 #endif

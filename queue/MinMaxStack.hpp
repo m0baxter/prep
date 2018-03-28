@@ -1,8 +1,8 @@
 
-#include <vector>
-
 #ifndef MIMMAXSTACK_HPP
 #define MINMAXSTACK_HPP
+
+#include <vector>
 
 template<class T>
 class MinMaxStack {
