@@ -1,9 +1,9 @@
 
-#include <string>
-#include <sstream>
-
 #ifndef STRINGTHINGS_HPP
 #define STRINGTHINGS_HPP
+
+#include <string>
+#include <sstream>
 
 template<class T>
 T fromString( std::string s ) {

@@ -16,29 +16,14 @@ class Node {
       T val;
 
    public:
-      Node();
-      Node( const T );
+      Node() { rChild = nullptr; lChild = nullptr; };
+      Node( const T v ) { val = v; rChild = nullptr; lChild = nullptr; };
       T getVal() { return val; };
       std::shared_ptr< Node<T> > getLeft() { return lChild; };
       std::shared_ptr< Node<T> > getRight() { return rChild; };
       void setLeft( std::shared_ptr< Node<T> > n) { lChild = n; };
       void setRight( std::shared_ptr< Node<T> > n) { rChild = n; };
 };
-
-template<class T>
-Node<T>::Node() {
-
-   rChild = nullptr;
-   lChild = nullptr;
-}
-
-template<class T>
-Node<T>::Node( const T v ) {
-
-   val = v;
-   rChild = nullptr;
-   lChild = nullptr;
-}
 
 template<class T>
 class Tree {
