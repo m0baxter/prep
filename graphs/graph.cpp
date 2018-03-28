@@ -61,7 +61,7 @@ std::vector< std::unordered_set<int> > Graph::connectedComponents() {
       int node = p.first;
 
       if ( !visited.count(node) ) {
-         
+
          visited.insert(node);
 
          std::unordered_set<int> reachable = { node };
@@ -99,7 +99,7 @@ std::vector<int> Graph::path( const int start, const int end ) {
    int node = start;
 
    while ( node != end ) {
-      
+
       bool foundUnvisited = false;
 
       for ( auto &n : adj[node] ) {
@@ -144,17 +144,18 @@ std::vector<int> Graph::shortestPath( const int start, const int end ) {
 
       for ( auto &n : adj[node] ) {
 
-         std::vector<int> p = path;
-         p.push_back(n);
+         if ( n != *( path.end() - 2) ) {
+            std::vector<int> p = path;
+            p.push_back(n);
 
-         if ( p.size() <= shortest ) {
-            if ( n == end ) {
-               std::cout << "Shortest: " << p.size() << std::endl;
-               shortest = p.size();
-               shortPath = p;
+            if ( p.size() <= shortest ) {
+               if ( n == end ) {
+                  shortest = p.size();
+                  shortPath = p;
+               }
+
+               paths.push(p);
             }
-
-            paths.push(p);
          }
       }
    }
@@ -162,43 +163,66 @@ std::vector<int> Graph::shortestPath( const int start, const int end ) {
    return shortPath;
 }
 
+void Graph::printPath( const int start, const int end ) {
+   /*Prints the shortest path between two points if it exists.*/
+
+   std::vector<int> path = shortestPath( start, end );
+
+   if ( path.empty() ) {
+      std::cout << "No path from " << start << " to " << end << "." << std::endl;
+   }
+
+   else {
+
+      std::cout << "Shortest path between " << start << " and " << end << ": ";
+
+      for ( int i = 0; i < path.size() - 1; ++i ) {
+         std::cout << path[i] << " -> ";
+      }
+
+      std::cout << path[ path.size() - 1 ] << std::endl;
+   }
+}
+
+bool Graph::hasCycle() {
+
+   for ( auto &pair : adj ) {
+
+      std::vector<int> path = shortestPath( pair.first, pair.first );
+
+      if ( !path.empty() ) {
+         return true;
+      }
+   }
+
+   return false;
+}
+
+bool Graph::isTree() {
+
+   return connected() and !hasCycle();
+}
+
 int main() {
 
    Graph g;
 
-   g.addNode(1);
-   g.addNode(2);
-   g.addNode(3);
-   g.addNode(4);
-   g.addNode(5);
-   g.addNode(6);
-   g.addNode(7);
-   g.addNode(8);
-
-   g.addEdgeB( 1, 2);
-   g.addEdgeB( 1, 3);
-   g.addEdgeB( 1, 7);
-   g.addEdgeB( 2, 3);
-   g.addEdgeB( 3, 4);
-   g.addEdgeB( 3, 6);
-   g.addEdgeB( 3, 5);
-   g.addEdgeB( 5, 4);
-   g.addEdgeB( 5, 6);
-   g.addEdgeB( 4, 6);
-   g.addEdgeB( 6, 7);
-
-   std::vector<int> path = g.shortestPath( 1, 7 );
-
-   if ( path.empty() ) {
-      std::cout << "No path." << std::endl;
+   for ( int i = 1; i <= 10; ++i ) {
+      g.addNode(i);
    }
-   else {
-      for ( int i = 0; i < path.size() - 1; ++i ) {
-         std::cout << path[i] << " -> ";
-      }
-      
-      std::cout << path[ path.size() - 1 ] << std::endl;
-   }
+
+   g.addEdgeB(1, 2);
+   g.addEdgeB(1, 3);
+   g.addEdgeB(1, 4);
+   g.addEdgeB(2, 5);
+   g.addEdgeB(3, 6);
+   g.addEdgeB(3, 7);
+   g.addEdgeB(4, 8);
+   g.addEdgeB(4, 9);
+   g.addEdgeB(9, 10);
+
+   std::cout <<  g.hasCycle() << std::endl;
+   std::cout <<  g.isTree() << std::endl;
 
    return 0;
 }

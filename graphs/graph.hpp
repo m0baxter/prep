@@ -21,6 +21,9 @@ class Graph{
       bool connected() { return connectedComponents().size() <= 1; };
       std::vector<int> path(const int, const int );
       std::vector<int> shortestPath( const int, const int );
+      void printPath( const int, const int );
+      bool hasCycle();
+      bool isTree();
 };
 
 #endif
