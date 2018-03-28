@@ -144,7 +144,7 @@ std::vector<int> Graph::shortestPath( const int start, const int end ) {
 
       for ( auto &n : adj[node] ) {
 
-         if ( n != *( path.end() - 2) ) {
+         if ( n != *( path.end() - 2) ) { //stop the path from backtracking.
             std::vector<int> p = path;
             p.push_back(n);
 
