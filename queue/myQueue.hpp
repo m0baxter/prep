@@ -13,8 +13,8 @@ class MyQueue {
    public:
       void add( const T a ) { back.push_back(a); };
       T pop();
-      size_t size() { return front.size() + back.size(); };
-      bool empty() { return front.empty() and back.empty(); };
+      size_t size() const { return front.size() + back.size(); };
+      bool empty() const { return front.empty() and back.empty(); };
 };
 
 template<class T>

@@ -18,11 +18,11 @@ class LinkedList {
       LinkedList() {
          head = nullptr;
          tail = nullptr;
-      }
+      };
 
       void insertHead( T val ) {
 
-         std::shared_ptr< Node<T> > newNode(new Node<T>(val, nullptr) );
+         std::shared_ptr< Node<T> > newNode( new Node<T>(val, nullptr) );
 
          if ( head == nullptr ){
             head = newNode;
@@ -32,7 +32,7 @@ class LinkedList {
             newNode -> setNext( head );
             head = newNode;
          }
-      }
+      };
 
       void insertTail( T val ) {
 
@@ -46,25 +46,25 @@ class LinkedList {
             tail -> setNext(newNode);
             tail = newNode;
          }
-      }
+      };
 
-      std::shared_ptr< Node<T> > begin() {
+      std::shared_ptr< Node<T> > begin() const {
          return head;
-      }
+      };
 
-      std::shared_ptr< Node<T> > end() {
+      std::shared_ptr< Node<T> > end() const {
          return tail->getNext();
-      }
+      };
 
-      bool isEmpty() {
-         return (head == nullptr && tail == nullptr);
-      }
+      bool isEmpty() const {
+         return ( head == nullptr && tail == nullptr );
+      };
 
-      bool isSingle() {
+      bool isSingle() const {
          return head == tail;
-      }
+      };
 
-      size_t size(){
+      size_t size() const {
 
          std::shared_ptr< Node<T> >n = head; //this -> begin();
          size_t len = 0;
@@ -75,9 +75,9 @@ class LinkedList {
          }
 
          return len;
-      }
+      };
 
-      T element( int k ) {
+      T element( const int k ) const {
 
          std::shared_ptr< Node<T> > n = head;
 
@@ -85,9 +85,9 @@ class LinkedList {
             n = n->getNext();
          }
          return n->getData();
-      }
+      };
 
-      std::shared_ptr< Node<T> > nodeAt( int k ) {
+      std::shared_ptr< Node<T> > nodeAt( const int k ) const {
 
          std::shared_ptr< Node<T> > n = head;
 
@@ -95,9 +95,9 @@ class LinkedList {
             n = n->getNext();
          }
          return n;
-      }
+      };
 
-      bool hasLoop() {
+      bool hasLoop() const {
          /*Detects the presence of a loop. This can never happend with this implementation...*/
 
          std::shared_ptr< Node<T> > single = head;
@@ -123,11 +123,11 @@ class LinkedList {
          }
 
          return false;
-      }
+      };
 };
 
 template<class T>
-std::pair< LinkedList<T>, LinkedList<T> > splitList( LinkedList<T> list ) {
+std::pair< LinkedList<T>, LinkedList<T> > splitList( const LinkedList<T> list ) {
    /*Splits list into two, approximate, halves.*/
 
    LinkedList<T> first, second;
@@ -151,7 +151,7 @@ std::pair< LinkedList<T>, LinkedList<T> > splitList( LinkedList<T> list ) {
 }
 
 template<class T>
-LinkedList<T> reverseList( LinkedList<T> list ) {
+LinkedList<T> reverseList( const LinkedList<T> list ) {
    /*Reverses the list.*/
 
    LinkedList<T> rev;
@@ -167,7 +167,7 @@ LinkedList<T> reverseList( LinkedList<T> list ) {
 }
 
 template<class T>
-LinkedList<T> merge( LinkedList<T> l1, LinkedList<T> l2 ) {
+LinkedList<T> merge( const LinkedList<T> l1, const LinkedList<T> l2 ) {
    /*Merges the two sorted lists.*/
 
    LinkedList<T> merged;
@@ -214,7 +214,7 @@ LinkedList<T> merge( LinkedList<T> l1, LinkedList<T> l2 ) {
 }
 
 template<class T>
-LinkedList<T> mergeSort( LinkedList<T> list ) {
+LinkedList<T> mergeSort( const LinkedList<T> list ) {
    /*Sorts list using merge sort.*/
 
    if ( list.isEmpty() ) {
@@ -232,7 +232,7 @@ LinkedList<T> mergeSort( LinkedList<T> list ) {
 }
 
 template<class T>
-LinkedList<T> removeDups( LinkedList<T> list ) {
+LinkedList<T> removeDups( const LinkedList<T> list ) {
    /*Retruns a linked list free of duplicates.*/
 
    LinkedList<T> res;
@@ -266,7 +266,7 @@ LinkedList<T> removeDups( LinkedList<T> list ) {
 }
 
 template<class T>
-LinkedList<T> quickSort( LinkedList<T> list ) {
+LinkedList<T> quickSort( const LinkedList<T> list ) {
    /*Performs a quick sort on list.*/
 
    if ( list.isEmpty() ) {
@@ -285,7 +285,7 @@ LinkedList<T> quickSort( LinkedList<T> list ) {
 }
 
 template<class T>
-std::tuple< LinkedList<T>, LinkedList<T>, LinkedList<T> > partition( LinkedList<T> list ) {
+std::tuple< LinkedList<T>, LinkedList<T>, LinkedList<T> > partition( const LinkedList<T> list ) {
    /*Partitions the list into pivot, elements lower than pivot, and those higher than pivot.*/
 
    if ( list.size() == 0 ) {
@@ -326,7 +326,7 @@ std::tuple< LinkedList<T>, LinkedList<T>, LinkedList<T> > partition( LinkedList<
 }
 
 template<class T>
-LinkedList<T> operator+( LinkedList<T> l1, LinkedList<T> l2 ) {
+LinkedList<T> operator+( const LinkedList<T> l1, const LinkedList<T> l2 ) {
 
    LinkedList<T> res;
 

@@ -15,10 +15,10 @@ class MinMaxStack {
    public:
       void push( T );
       T pop();
-      T min() { return mins.back(); };
-      T max() { return maxs.back(); };
-      size_t size() { return data.size(); };
-      bool empty() { return data.empty(); };
+      T min() const { return mins.back(); };
+      T max() const { return maxs.back(); };
+      size_t size() const { return data.size(); };
+      bool empty() const { return data.empty(); };
 };
 
 template<class T>

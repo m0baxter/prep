@@ -3,7 +3,6 @@
 #include <vector>
 #include "tree.hpp"
 
-
 int main() {
 
    Tree<int> t;

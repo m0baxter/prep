@@ -36,18 +36,18 @@ class Tree {
       Tree( std::shared_ptr< Node<T> > node ) { root = node; };
       void insert( const T );
       void remove( const T );
-      bool isIn( const T );
-      size_t height();
-      void inorder();
-      void postorder();
-      void preorder();
-      bool isBalanced();
-      std::shared_ptr< Node<T> > getPointer( T );
-      std::shared_ptr< Node<T> > getRoot()  { return root; };
-      std::shared_ptr< Node<T> > getLeft()  { return root->getLeft(); };
-      std::shared_ptr< Node<T> > getRight() { return root->getRight(); };
+      bool isIn( const T ) const;
+      size_t height() const;
+      void inorder() const;
+      void postorder() const;
+      void preorder() const;
+      bool isBalanced() const;
+      std::shared_ptr< Node<T> > getPointer( T ) const;
+      std::shared_ptr< Node<T> > getRoot() const { return root; };
+      std::shared_ptr< Node<T> > getLeft() const { return root->getLeft(); };
+      std::shared_ptr< Node<T> > getRight() const { return root->getRight(); };
       void print();
-      std::shared_ptr< Node<T> > kthNode( int& );
+      std::shared_ptr< Node<T> > kthNode( int& ) const;
 };
 
 template<class T>
@@ -80,7 +80,7 @@ void Tree<T>::insert( const T val ) {
 }
 
 template<class T>
-bool Tree<T>::isIn( const T v ) {
+bool Tree<T>::isIn( const T v ) const {
    if ( root == nullptr ) {
       return false;
    }
@@ -98,7 +98,7 @@ bool Tree<T>::isIn( const T v ) {
 }
 
 template<class T>
-size_t Tree<T>::height() {
+size_t Tree<T>::height() const {
 
    if (root == nullptr){
       return 0;
@@ -109,7 +109,7 @@ size_t Tree<T>::height() {
 }
 
 template<class T>
-void Tree<T>::preorder() {
+void Tree<T>::preorder() const {
 
    if ( root == nullptr ) {
       return;
@@ -121,7 +121,7 @@ void Tree<T>::preorder() {
 }
 
 template<class T>
-void Tree<T>::inorder() {
+void Tree<T>::inorder() const {
 
    if ( root == nullptr ) {
       return;
@@ -133,7 +133,7 @@ void Tree<T>::inorder() {
 }
 
 template<class T>
-void Tree<T>::postorder() {
+void Tree<T>::postorder() const {
 
    if ( root == nullptr ) {
       return;
@@ -145,7 +145,7 @@ void Tree<T>::postorder() {
 }
 
 template<class T>
-bool Tree<T>::isBalanced() {
+bool Tree<T>::isBalanced() const {
 
    if ( root == nullptr ) {
       return true;
@@ -160,7 +160,7 @@ bool Tree<T>::isBalanced() {
 
 
 template<class T>
-std::shared_ptr< Node<T> > Tree<T>::getPointer( T val ) {
+std::shared_ptr< Node<T> > Tree<T>::getPointer( T val ) const {
 
    std::shared_ptr< Node<T> > res = nullptr;
 
@@ -219,7 +219,7 @@ void Tree<T>::print() {
 }
 
 template<class T>
-std::shared_ptr< Node<T> > Tree<T>::kthNode( int &k ) {
+std::shared_ptr< Node<T> > Tree<T>::kthNode( int &k ) const {
    /*returns the kth node inorder.*/
 
    std::shared_ptr< Node<T> > res = nullptr;
@@ -247,7 +247,7 @@ std::shared_ptr< Node<T> > Tree<T>::kthNode( int &k ) {
 }
 
 template<class T>
-bool equal( Tree<T> t1, Tree<T> t2 ) {
+bool equal( const Tree<T> t1, const Tree<T> t2 ) {
    /*Determines whether the two trees are the same by structure and values.*/
 
    if ( t1.getRoot() != nullptr and t2.getRoot() == nullptr ) {
